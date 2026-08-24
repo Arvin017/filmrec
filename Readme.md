@@ -15,6 +15,9 @@ https://filmrec-o0xp.onrender.com
 ### Swagger API Documentation
 https://filmrec-o0xp.onrender.com/swagger-ui/index.html
 
+> Note: the backend is hosted on Render's free tier, which spins down after inactivity.
+> A keep-alive ping (UptimeRobot) is used to minimize cold-start delays.
+
 ---
 
 ## ✨ Features
@@ -64,7 +67,29 @@ https://filmrec-o0xp.onrender.com/swagger-ui/index.html
                     │    TMDB API     │
                     │  Movie Metadata │
                     └─────────────────┘
+```
 
+---
+
+## 🧠 How Recommendations Work
+
+For every unwatched movie, the engine compares it against every movie you've rated,
+scoring shared attributes by weight:
+
+| Shared with a rated movie | Weight |
+|---|---|
+| Director | 3.0 |
+| Genre | 2.0 |
+| Actor | 1.0 |
+
+Each match is also scaled by how highly you rated that movie (score ÷ 5), so a film
+sharing a director with something you rated 5★ pulls harder than one sharing an actor
+with something you rated 2★. Candidates are ranked by total score, and the single
+strongest contributing match becomes the human-readable "why" shown with each
+recommendation — e.g. *"Recommended because it shares director Denis Villeneuve with
+Dune, which you rated 5/5."*
+
+---
 
 ## 🔐 Authentication
 
@@ -100,5 +125,4 @@ https://filmrec-o0xp.onrender.com/swagger-ui/index.html
 ## 👨‍💻 Author
 
 **Arvin**
-
 GitHub: https://github.com/Arvin017
