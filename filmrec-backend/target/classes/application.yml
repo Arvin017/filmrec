@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: filmrec
+
+  datasource:
+    url: "${MYSQL_URL:jdbc:mysql://localhost:3306/filmrec?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}"
+    username: ${MYSQL_USERNAME:admin}
+    password: ${MYSQL_PASSWORD:admin}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/filmrec}
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+jwt:
+  secret: ${JWT_SECRET:this-is-a-dev-only-secret-key-change-it-in-prod-please-1234567890}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24h
+
+tmdb:
+  api-key: ${TMDB_API_KEY:}
+  base-url: https://api.themoviedb.org/3
+  image-base-url: https://image.tmdb.org/t/p/w500
+  seed-page-count: ${TMDB_SEED_PAGES:5} # ~20 movies/page -> 100 movies default
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.arvin.filmrec: INFO
